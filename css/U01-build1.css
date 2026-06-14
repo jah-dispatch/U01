@@ -1,0 +1,609 @@
+/* --- U01 Root Palette & Matrix --- */
+:root {
+    --bg-void: #000000;
+    --armor-dark: #14110C;
+    --strike-gold: #C89736;
+    --crown-gold: #EAC066;
+    --bronze-shadow: #835E1C;
+    --text-clarity: #F2F2F2;
+    --text-muted: #A6A6A6;
+    
+    --font-sans: "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "SF Mono", Consolas, monospace;
+    
+    --max-width: 1400px;
+    --padding-standard: clamp(40px, 6vw, 90px);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-void);
+    color: var(--text-clarity);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Header & Navigation (Centered Logo Update) --- */
+.u01-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--bronze-shadow);
+    padding: 1rem 2rem;
+    
+    /* Grid structure perfectly centers the middle item */
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.header-spacer {
+    /* Empty div to balance the left side of the grid */
+}
+
+.u01-logo-container {
+    display: flex;
+    justify-content: center;
+}
+
+.u01-logo-img {
+    height: 65px; 
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0px 0px 4px rgba(200, 151, 54, 0.2));
+    transition: filter 0.3s ease;
+}
+
+.u01-logo-img:hover {
+    filter: drop-shadow(0px 0px 10px rgba(234, 192, 102, 0.5));
+}
+
+.u01-nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.u01-nav a {
+    color: var(--text-clarity);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-left: 2rem;
+    transition: color 0.3s ease;
+}
+
+.u01-nav a:hover {
+    color: var(--crown-gold);
+}
+
+/* --- Hero Section --- */
+.u01-hero {
+    padding: var(--padding-standard) 2rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid var(--bronze-shadow);
+}
+
+.u01-eyebrow {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--strike-gold);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.u01-h1 {
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}
+
+.u01-h1 span {
+    color: var(--strike-gold);
+}
+
+.u01-lede {
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    max-width: 850px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+}
+
+/* --- Universal Section Layouts --- */
+.u01-section {
+    padding: var(--padding-standard) 2rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    border-bottom: 1px solid var(--bronze-shadow);
+}
+
+.u01-section:last-of-type {
+    border-bottom: none;
+}
+
+.u01-section-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.u01-section-desc {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 900px;
+    margin-bottom: 3rem;
+}
+
+/* --- Stacked Facts (New Layout) --- */
+.u01-stacked-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid rgba(131, 94, 28, 0.3); /* Subtle internal divider */
+}
+
+.u01-stacked-fact:last-child {
+    border-bottom: none;
+}
+
+.stacked-number {
+    font-size: clamp(5rem, 10vw, 8rem);
+    font-weight: 900;
+    font-family: var(--font-mono);
+    color: var(--bg-void); /* Cutout effect */
+    -webkit-text-stroke: 2px var(--crown-gold);
+    line-height: 0.8;
+    flex-shrink: 0;
+    width: 250px; /* Fixed width to keep text aligned on the right */
+}
+
+.stacked-number span {
+    font-size: 0.5em;
+    vertical-align: top;
+    -webkit-text-stroke: 1px var(--crown-gold);
+}
+
+.stacked-content h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-clarity);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+}
+
+.stacked-content p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 700px;
+}
+
+/* --- The Interstitial (Stop and Think Break) --- */
+.u01-interstitial {
+    background-color: var(--armor-dark);
+    border-top: 2px solid var(--strike-gold);
+    border-bottom: 2px solid var(--strike-gold);
+    padding: 8rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle background glow for the interstitial */
+.u01-interstitial::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(200, 151, 54, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.interstitial-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.interstitial-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.interstitial-title.accent {
+    color: var(--strike-gold);
+    margin-bottom: 2rem;
+}
+
+.interstitial-text {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    color: var(--text-clarity);
+    font-weight: 300;
+    margin-bottom: 3rem;
+}
+
+/* --- Grid Systems & Cards --- */
+.u01-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.u01-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+@keyframes goldShimmer {
+    0% {
+        border-color: var(--bronze-shadow);
+        box-shadow: 0 0 4px rgba(200, 151, 54, 0.05);
+    }
+    50% {
+        border-color: var(--crown-gold);
+        box-shadow: 0 0 15px rgba(234, 192, 102, 0.3), inset 0 0 8px rgba(200, 151, 54, 0.1);
+    }
+    100% {
+        border-color: var(--bronze-shadow);
+        box-shadow: 0 0 4px rgba(200, 151, 54, 0.05);
+    }
+}
+
+.u01-card {
+    background-color: var(--armor-dark); 
+    border: 1px solid var(--strike-gold);
+    padding: clamp(30px, 4vw, 45px);
+    border-radius: 4px; 
+    display: flex;
+    flex-direction: column;
+    animation: goldShimmer 5s infinite alternate ease-in-out;
+    transition: transform 0.3s ease;
+}
+
+.u01-card:hover {
+    transform: translateY(-5px);
+}
+
+.u01-stat {
+    font-size: clamp(4rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--crown-gold);
+    margin-bottom: 1.5rem;
+    font-family: var(--font-mono);
+    letter-spacing: -0.05em;
+}
+
+/* --- Updated Stat Text --- */
+.u01-stat-text {
+    font-size: clamp(1.75rem, 3vw, 2.5rem); /* Scaled down slightly to fit smaller grid columns */
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--crown-gold);
+    margin-bottom: 1.5rem;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    
+    /* THE OVERFLOW FIX */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto; 
+}
+
+.u01-stat-small {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--strike-gold);
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+}
+
+.u01-card h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.u01-card p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* --- Buttons --- */
+.u01-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 36px;
+    background: var(--bg-void);
+    color: var(--strike-gold);
+    border: 2px solid var(--strike-gold);
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.u01-btn:hover {
+    background: var(--strike-gold);
+    color: var(--bg-void);
+    box-shadow: 0 0 20px rgba(234, 192, 102, 0.4);
+}
+
+.u01-btn.solid-gold {
+    background: var(--strike-gold);
+    color: var(--bg-void);
+}
+
+.u01-btn.solid-gold:hover {
+    background: var(--crown-gold);
+    box-shadow: 0 0 25px rgba(234, 192, 102, 0.6);
+}
+
+/* --- Footer --- */
+.u01-footer {
+    border-top: 1px solid var(--bronze-shadow);
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: var(--bg-void);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.u01-footer-logo {
+    height: 45px;
+    width: auto;
+    filter: grayscale(100%) opacity(0.4);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.u01-footer-logo:hover {
+    filter: grayscale(0%) opacity(1) drop-shadow(0px 0px 12px var(--strike-gold));
+}
+
+.u01-footer-text {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* --- Responsive Resets --- */
+@media (max-width: 900px) {
+    .u01-stacked-fact {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .stacked-number {
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .u01-header {
+        grid-template-columns: 1fr;
+    }
+    .header-spacer, .u01-nav {
+        display: none; 
+    }
+    .u01-logo-img {
+        height: 50px;
+    }
+}
+/* --- Categorization Tags --- */
+.u01-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 6px 12px;
+    margin-bottom: 1.5rem;
+    align-self: flex-start; /* Prevents the tag from stretching across the whole card */
+    border-radius: 0; /* Strictly square corners */
+}
+
+/* Brightest accent, demands immediate attention */
+.u01-tag-healthcare {
+    background-color: var(--crown-gold);
+    color: var(--bg-void);
+}
+
+/* Void background with a sharp gold border */
+.u01-tag-employment {
+    background-color: var(--bg-void);
+    color: var(--text-clarity);
+    border: 1px solid var(--strike-gold);
+}
+
+/* Deep oxidized gold, sits slightly back in the hierarchy */
+.u01-tag-finance {
+    background-color: var(--bronze-shadow);
+    color: var(--text-clarity);
+}
+
+/* Core U01 gold, highly visible */
+.u01-tag-systemic {
+    background-color: var(--strike-gold);
+    color: var(--bg-void);
+}
+
+/* --- Header "Get Involved" Boxed Link --- */
+.u01-nav-btn {
+    border: 1px solid var(--strike-gold);
+    padding: 8px 18px;
+    transition: all 0.3s ease;
+}
+
+/* Ensures the text color changes to black when hovered over the gold background */
+.u01-nav .u01-nav-btn:hover {
+    background-color: var(--strike-gold);
+    color: var(--bg-void) !important; 
+    box-shadow: 0 0 12px rgba(200, 151, 54, 0.4);
+}
+/* --- Intersection Observer Reveal Animation --- */
+.u01-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+.u01-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Staggered Cascades for Grids --- */
+/* 4-Column Grid Staggering */
+.u01-grid-4 .u01-card:nth-child(1) { transition-delay: 0.1s; }
+.u01-grid-4 .u01-card:nth-child(2) { transition-delay: 0.2s; }
+.u01-grid-4 .u01-card:nth-child(3) { transition-delay: 0.3s; }
+.u01-grid-4 .u01-card:nth-child(4) { transition-delay: 0.4s; }
+
+/* 3-Column Grid Staggering */
+.u01-grid-3 .u01-card:nth-child(1) { transition-delay: 0.1s; }
+.u01-grid-3 .u01-card:nth-child(2) { transition-delay: 0.2s; }
+.u01-grid-3 .u01-card:nth-child(3) { transition-delay: 0.3s; }
+
+/* Stacked Facts Staggering */
+.u01-stacked-fact:nth-child(1) { transition-delay: 0.1s; }
+.u01-stacked-fact:nth-child(2) { transition-delay: 0.3s; }
+/* --- Mobile Menu Hint & Overlay --- */
+.u01-mobile-hint {
+    display: none; /* Hidden on desktop */
+    align-items: center;
+    gap: 8px;
+    color: var(--strike-gold);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    animation: pulseHint 2.5s infinite ease-in-out;
+    pointer-events: none; /* Prevents accidental clicks on the text itself */
+}
+
+@keyframes pulseHint {
+    0%, 100% { opacity: 0.5; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(4px); }
+}
+
+.u01-mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(15px);
+    z-index: 999; /* Sits just underneath the header */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.u01-mobile-menu.is-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    text-align: center;
+}
+
+.mobile-link {
+    color: var(--text-clarity);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+}
+
+.mobile-link:hover, .mobile-link:active {
+    color: var(--crown-gold);
+}
+
+.mobile-link.solid-gold {
+    color: var(--bg-void);
+    background-color: var(--strike-gold);
+    padding: 10px 20px;
+    border: 1px solid var(--strike-gold);
+}
+
+/* --- Mobile Media Query Overrides --- */
+@media (max-width: 768px) {
+    .u01-header {
+        /* Forces the 3-column grid to distribute space evenly */
+        grid-template-columns: 1fr auto 1fr;
+    }
+    
+    .u01-nav {
+        display: none; 
+    }
+    
+    .u01-mobile-hint {
+        display: flex; /* Activates the hint text and arrow */
+    }
+}
