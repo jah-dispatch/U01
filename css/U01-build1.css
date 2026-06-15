@@ -607,3 +607,337 @@ body {
         display: flex; /* Activates the hint text and arrow */
     }
 }
+/* --- External Comms: YouTube Integration --- */
+:root {
+    --yt-red: #FF0000;
+    --yt-dark: #CC0000;
+    --yt-shadow: #800000;
+}
+
+/* Header Nav Button specific for YouTube */
+.yt-nav-btn {
+    border-color: var(--yt-red) !important;
+    color: var(--text-clarity) !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 1rem !important; /* Slightly tighter spacing next to the other box */
+}
+
+.yt-nav-btn:hover {
+    background-color: var(--yt-red) !important;
+    color: var(--bg-void) !important;
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.5) !important;
+}
+
+.yt-icon-small {
+    width: 18px;
+    height: 18px;
+}
+
+/* The Broadcast Card Layout */
+.u01-broadcast-card {
+    background-color: var(--armor-dark);
+    border: 1px solid var(--yt-red);
+    padding: clamp(30px, 4vw, 45px);
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    animation: redShimmer 5s infinite alternate ease-in-out;
+}
+
+.broadcast-content {
+    flex: 1 1 500px; /* Allows it to take up space but wrap on smaller screens */
+}
+
+.yt-eyebrow {
+    color: var(--yt-red) !important;
+}
+
+.broadcast-action {
+    flex: 0 0 auto;
+}
+
+/* Main YouTube Call-to-Action Button */
+.yt-main-btn {
+    background-color: var(--bg-void);
+    color: var(--yt-red);
+    border-color: var(--yt-red);
+    display: inline-flex;
+    gap: 12px;
+}
+
+.yt-main-btn:hover {
+    background-color: var(--yt-red);
+    color: var(--bg-void);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+.yt-icon-large {
+    width: 24px;
+    height: 24px;
+}
+
+/* Dedicated Red Shimmer Animation */
+@keyframes redShimmer {
+    0%, 100% {
+        border-color: var(--yt-shadow);
+        box-shadow: 0 0 4px rgba(255, 0, 0, 0.05);
+    }
+    50% {
+        border-color: var(--yt-red);
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 0 8px rgba(255, 0, 0, 0.1);
+    }
+}
+
+/* Mobile adjustments for the Broadcast section */
+@media (max-width: 768px) {
+    .u01-broadcast-card {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .yt-main-btn {
+        width: 100%;
+    }
+}
+/* --- Critical Alert Interstitial --- */
+.u01-interstitial.stark-alert {
+    background-color: var(--bg-void);
+    border-top: 1px solid var(--text-muted);
+    border-bottom: 1px solid var(--text-muted);
+    padding: 6rem 2rem;
+}
+
+.u01-interstitial.stark-alert::before {
+    display: none; /* Strips the gold gradient glow for a harsher aesthetic */
+}
+
+.alert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 4rem;
+    text-align: left;
+}
+
+.alert-fact {
+    border-left: 2px solid var(--text-muted);
+    padding-left: 1.5rem;
+}
+
+.alert-stat {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--text-clarity);
+    font-family: var(--font-mono);
+    margin-bottom: 1rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+@media (max-width: 768px) {
+    .alert-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+/* --- Featured Single Card Override --- */
+.u01-card-featured {
+    max-width: 1000px;
+    margin: 0 auto;
+    border-color: var(--crown-gold); /* Elevates the urgency of this specific card */
+    padding: clamp(40px, 6vw, 60px);
+}
+
+.u01-card-featured p {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    line-height: 1.7;
+    color: var(--text-clarity);
+}
+
+@media (max-width: 768px) {
+    .u01-card-featured {
+        padding: clamp(30px, 4vw, 45px);
+    }
+}
+/* --- HTML/CSS Infographic: The Accountability Void --- */
+.u01-infographic {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--bronze-shadow);
+}
+
+.infographic-title {
+    font-family: var(--font-mono);
+    color: var(--strike-gold);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.infographic-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.info-track {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--bronze-shadow);
+    border-radius: 4px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.info-track.track-danger {
+    border-color: var(--crown-gold);
+    background: rgba(200, 151, 54, 0.05);
+}
+
+.track-header {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--text-clarity);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+}
+
+.track-header.accent {
+    color: var(--crown-gold);
+}
+
+.track-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.track-node {
+    background: var(--armor-dark);
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    padding: 10px 15px;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 250px;
+}
+
+.track-node.node-danger {
+    border-color: var(--strike-gold);
+    color: var(--text-clarity);
+}
+
+.track-line {
+    width: 2px;
+    height: 40px;
+    background: var(--text-muted);
+    margin: 5px 0;
+}
+
+.track-line.line-danger {
+    background: var(--strike-gold);
+}
+
+.track-result {
+    background: var(--bronze-shadow);
+    color: var(--text-clarity);
+    padding: 15px;
+    width: 100%;
+    max-width: 250px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: auto;
+}
+
+.track-result.result-danger {
+    background: var(--yt-red); /* Utilizing the external warning color */
+    color: var(--bg-void);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.track-result.result-danger strong {
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+
+.track-result.result-danger span {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+}
+
+/* Responsive adjustments for the infographic */
+@media (max-width: 768px) {
+    .infographic-split {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+/* --- Crisis Intervention Section --- */
+:root {
+    --crisis-orange: #FF4500;
+}
+
+.u01-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+    margin-bottom: 2rem;
+}
+
+.crisis-eyebrow {
+    color: var(--crisis-orange) !important;
+}
+
+.u01-tag-crisis {
+    background-color: var(--crisis-orange);
+    color: var(--bg-void);
+}
+
+.u01-tag-action {
+    background-color: var(--bg-void);
+    color: var(--text-clarity);
+    border: 1px solid var(--crisis-orange);
+}
+
+.crisis-action-block {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.solid-crisis {
+    background-color: var(--crisis-orange);
+    color: var(--bg-void);
+    border-color: var(--crisis-orange);
+    font-size: 1.2rem;
+    padding: 20px 40px;
+}
+
+.solid-crisis:hover {
+    background-color: var(--bg-void);
+    color: var(--crisis-orange);
+    box-shadow: 0 0 25px rgba(255, 69, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .u01-grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .solid-crisis {
+        width: 100%;
+    }
+}
