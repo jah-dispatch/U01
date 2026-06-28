@@ -3,285 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit of One | Demanded Dignity</title>
-    <link rel="stylesheet" href="css/U01-build1.css">
+    <title>Unit of One | Establishing Connection...</title>
+    <style>
+        /* --- U01 Video Splash Base --- */
+        :root {
+            --bg-void: #000000;
+            --strike-gold: #C89736;
+            --text-mono: "SF Mono", Consolas, monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-void);
+            color: var(--strike-gold);
+            overflow: hidden; /* Prevents any scrolling */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* --- Fullscreen Video Background --- */
+        .u01-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .u01-video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures no letterboxing */
+        }
+
+        /* --- Loading Bar Interface --- */
+        .u01-loader-wrapper {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .u01-status-text {
+            font-family: var(--text-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            animation: pulseText 1.5s infinite ease-in-out;
+        }
+
+        .u01-progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(200, 151, 54, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .u01-progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: var(--strike-gold);
+            width: 0%;
+            box-shadow: 0 0 10px var(--strike-gold);
+            /* Forces the animation to take exactly 5 seconds */
+            animation: loadSequence 5s linear forwards; 
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes loadSequence {
+            0% { width: 0%; }
+            20% { width: 15%; }
+            50% { width: 60%; }
+            80% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        /* Fallback skip button just in case user's browser blocks autoplay */
+        .u01-skip {
+            position: absolute;
+            bottom: 3%;
+            z-index: 3;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: var(--text-mono);
+            font-size: 0.7rem;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            transition: color 0.3s ease;
+        }
+
+        .u01-skip:hover { color: var(--strike-gold); }
+    </style>
 </head>
 <body>
 
-   <body>
-
-  <!-- Target Navigation System -->
-    <header class="u01-header">
-        <div class="header-left">
-            <div class="u01-mobile-hint" id="mobile-hint">
-                <span>TAP FOR MENU</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </div>
-        </div>
-
-        <div class="u01-logo-container">
-            <a href="#" id="menu-trigger" aria-label="Toggle Menu">
-                <img src="assets/images/U01-logo-no-motto.png" alt="Unit of One Shield" class="u01-logo-img">
-            </a>
-        </div>
-
-        <nav class="u01-nav">
-            <a href="#core">The Core</a>
-            <a href="#reality">The Reality</a>
-            <a href="#vulnerability">Vulnerability</a>
-            <a href="#intervention">Intervention</a>
-            <a href="#framework">Framework</a>
-            <a href="#override" class="u01-nav-btn">Get Involved</a>
-            <a href="https://www.youtube.com/@JackAspenHarper" target="_blank" class="u01-nav-btn yt-nav-btn">
-                <svg class="yt-icon-small" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                Channel
-            </a>
-        </nav>
-    </header>
-
-    <!-- The Fullscreen Mobile Overlay -->
-    <div class="u01-mobile-menu" id="mobile-menu">
-        <nav class="mobile-nav-links">
-            <a href="#core" class="mobile-link">The Core</a>
-            <a href="#reality" class="mobile-link">The Reality</a>
-            <a href="#vulnerability" class="mobile-link">Vulnerability</a>
-            <a href="#intervention" class="mobile-link">Intervention</a>
-            <a href="#framework" class="mobile-link">Framework</a>
-            <a href="#override" class="mobile-link solid-gold">Get Involved</a>
-            <a href="https://www.youtube.com/@JackAspenHarper" target="_blank" class="mobile-link yt-nav-btn" style="border: none;">
-                YouTube Channel
-            </a>
-        </nav>
+    <div class="u01-video-container">
+        <!-- The playsinline attribute is critical for iOS mobile browsers -->
+        <video id="introVideo" autoplay muted playsinline>
+            <!-- Loads 9:16 video on mobile screens -->
+            <source media="(max-width: 768px)" src="assets/u01-intro-mobile.mp4" type="video/mp4">
+            <!-- Loads 16:9 video on desktop screens -->
+            <source src="assets/u01-intro-desktop.mp4" type="video/mp4">
+        </video>
     </div>
 
-    <main>
-        <section class="u01-hero" id="core">
-            <span class="u01-eyebrow">// Independent Navigation Protocol</span>
-            <h1 class="u01-h1">Demanded dignity.<br><span>Non Negotiable.</span></h1>
-            <p class="u01-lede">
-                A permanent, uncompromised repository for the solo entity. We are building the structural architecture required to interface with systemic infrastructure on our own terms.
-            </p>
-            <div class="hero-actions">
-                <a href="#reality" class="u01-btn">Analyze the Data</a>
-            </div>
-        </section>
-
-        <section class="u01-section" id="reality">
-            <span class="u01-eyebrow">Systemic Impact Metrics</span>
-            <h2 class="u01-section-title">Why the Unit of One Exists</h2>
-            <p class="u01-section-desc">Traditional safety nets assume a standard family or community support structure. When those fall away, the solo entity is subjected to systemic friction, bias, and bureaucratic exhaustion. These are the facts.</p>
-            
-            <div class="u01-grid-4">
-                <div class="u01-card u01-reveal">
-                    <span class="u01-tag u01-tag-healthcare">Healthcare</span>
-                    <div class="u01-stat">82%</div>
-                    <h3>Healthcare Bias</h3>
-                    <p>Studies indicate that over 82% of physicians hold implicit biases regarding individuals with significant structural challenges, leading to substandard care and dismissive consultations.</p>
-                </div>
-                <div class="u01-card u01-reveal">
-                    <span class="u01-tag u01-tag-employment">Employment</span>
-                    <div class="u01-stat">60%</div>
-                    <h3>Accommodation Denial</h3>
-                    <p>Despite legal mandates, nearly 60% of individuals face significant friction, delays, or outright denial when requesting necessary physical or remote work accommodations.</p>
-                </div>
-                <div class="u01-card u01-reveal">
-                    <span class="u01-tag u01-tag-finance">Finance</span>
-                    <div class="u01-stat-text">The "Tax"</div>
-                    <h3>Bureaucratic Fatigue</h3>
-                    <p>Navigating fragmented state and local support services imposes a heavy tax on mental health. Solo entities are forced to manage administrators who prioritize paperwork over human support.</p>
-                </div>
-                <div class="u01-card u01-reveal">
-                    <span class="u01-tag u01-tag-systemic">Systemic</span>
-                    <div class="u01-stat-text">Isolation</div>
-                    <h3>Systemic Blindspots</h3>
-                    <p>Support services are fundamentally designed to fix "problems" rather than support the individual. Adults without local advocates face drastically higher rates of forced institutionalization.</p>
-                </div>
-            </div>
-            </div>
-        </section>
-
-        <section class="u01-section">
-            <div class="u01-stacked-fact">
-                <div class="stacked-number">34<span>%</span></div>
-                <div class="stacked-content">
-                    <h3>The Solo Financial Penalty</h3>
-                    <p>Single-income entities face a drastically disproportionate cost of living. Without the dual-income structures that the modern economy assumes, the Unit of One absorbs the entirety of inflation, housing markups, and healthcare premiums without a safety net.</p>
-                </div>
-            </div>
-
-            <div class="u01-stacked-fact">
-                <div class="stacked-number">Zero</div>
-                <div class="stacked-content">
-                    <h3>Default Legal Advocacy</h3>
-                    <p>In medical emergencies, the Unit of One has zero default local advocates. This vacuum of representation aggressively increases the risk of state-appointed guardianship and the stripping of personal autonomy. We must build ironclad legal directives to counteract this void.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="u01-interstitial" id="override">
-            <div class="interstitial-content">
-                <span class="u01-eyebrow">// Protocol Override</span>
-                <h2 class="interstitial-title">You're not a liability.</h2>
-                <h2 class="interstitial-title accent">You are a Unit of One.</h2>
-                <p class="interstitial-text">The infrastructure is broken, not the individual. Will you continue to let failing systems dictate your boundaries, or will you build the architecture to demand your dignity?</p>
-                <a href="#framework" class="u01-btn solid-gold">Establish Your Perimeter</a>
-            </div>
-        </section>
-
-        <section class="u01-section" id="framework">
-            <span class="u01-eyebrow">Tactical Overview</span>
-            <h2 class="u01-section-title">The Counter-Measure</h2>
-            
-            <div class="u01-grid-3">
-                <div class="u01-card u01-reveal">
-                    <div class="u01-stat-small">01</div>
-                    <h3>Absolute Autonomy</h3>
-                    <p>Establishing digital and structural parameters that do not rely on local support systems or failing state-provided infrastructure.</p>
-                </div>
-                <div class="u01-card u01-reveal">
-                    <div class="u01-stat-small">02</div>
-                    <h3>The Shield</h3>
-                    <p>Strict defensive boundaries against administrative burnout, ensuring the physical and mental environment remains uncompromised.</p>
-                </div>
-                <div class="u01-card u01-reveal">
-                    <div class="u01-stat-small">03</div>
-                    <h3>Data Isolation</h3>
-                    <p>Organizing medical, legal, and housing infrastructure into clear, actionable data pipelines to enforce rapid, unignorable response times.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Broadcast / External Comms Section -->
-        <section class="u01-section u01-reveal" id="broadcast">
-            <div class="u01-broadcast-card">
-                <div class="broadcast-content">
-                    <span class="u01-eyebrow yt-eyebrow">// Public Broadcast Channel</span>
-                    <h2 class="u01-section-title">The U01 Feed</h2>
-                    <p class="u01-section-desc" style="margin-bottom: 0;">Visual documentation and unfiltered dispatches. Watch the architecture of the Unit of One being built, challenged, and deployed in real-time.</p>
-                </div>
-                <div class="broadcast-action">
-                    <a href="https://www.youtube.com/@JackAspenHarper" target="_blank" class="u01-btn yt-main-btn">
-                        <svg class="yt-icon-large" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                        Access Channel
-                    </a>
-                </div>
-            </div>
-        </section>
-
-       <!-- Medical Exploitation Interstitial -->
-        <section class="u01-section u01-reveal" id="vulnerability">
-            <span class="u01-eyebrow">// Systemic Exploitation</span>
-            <h2 class="u01-section-title">The Medical Power Imbalance</h2>
-            <p class="u01-section-desc">When the institution knows no one is watching, the standard of care fundamentally degrades. The solo entity is uniquely targeted by a system built to prioritize institutional liability over human dignity.</p>
-            
-            <!-- Single Centered High-Impact Card -->
-            <div class="u01-card u01-card-featured u01-reveal">
-                <span class="u01-tag u01-tag-healthcare">Healthcare</span>
-                <div class="u01-stat-text">The "Insultation"</div>
-                <h3>Institutional Gaslighting & Exploitation</h3>
-                <p>The power dynamic in modern medicine inherently favors the institution. When a patient enters a clinical environment without a local advocate or witness, they are routinely categorized as an "easy target." This structural vulnerability allows compromised medical professionals to mask dismissiveness as protocol, weaponizing the patient's isolation to avoid accountability. The result is not a consultation, but an insultation—where diagnostic overshadowing and unchecked arrogance replace actual care.</p>
-                <p style="margin-top: 2rem;" class="u01-stat-text">For the Unit of One, rigorous documentation and absolute self-advocacy are not optional. They're survival requirements.</p>
-
-                <!-- CSS Infographic: The Accountability Void -->
-                <div class="u01-infographic u01-reveal">
-                    <h4 class="infographic-title">Visualizing the Accountability Void</h4>
-                    <div class="infographic-split">
-                        
-                        <!-- Standard Track -->
-                        <div class="info-track">
-                            <div class="track-header">Accompanied Patient</div>
-                            <div class="track-flow">
-                                <div class="track-node">Local Advocate Present</div>
-                                <div class="track-line"></div>
-                                <div class="track-node">Witness to Consultation</div>
-                                <div class="track-line"></div>
-                                <div class="track-result">Standard Care Protocol</div>
-                            </div>
-                        </div>
-
-                        <!-- Unit of One Track -->
-                        <div class="info-track track-danger">
-                            <div class="track-header accent">Unit of One</div>
-                            <div class="track-flow">
-                                <div class="track-node node-danger">Zero Local Advocates</div>
-                                <div class="track-line line-danger"></div>
-                                <div class="track-node node-danger">Unwitnessed Assessment</div>
-                                <div class="track-line line-danger"></div>
-                                <div class="track-result result-danger">
-                                    <strong>"The Insultation"</strong>
-                                    <span>Dismissal & Overshadowing</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- End CSS Infographic -->
-
-            </div>
-        </section> 
-
-        <!-- Critical Data Interstitial -->
-        <section class="u01-interstitial stark-alert u01-reveal">
-            <div class="interstitial-content">
-                <span class="u01-eyebrow">// Critical Vulnerability</span>
-                <h2 class="interstitial-title">The Lethal Reality of Isolation</h2>
-                
-                <div class="alert-grid">
-                    <div class="alert-fact">
-                        <div class="alert-stat">Peak Risk</div>
-                        <p>Suicide rates in the U.S. peak dramatically in middle age (45-64). Over a 16-year period, these rates increased by nearly 60% for women and 37% for men in this exact demographic.</p>
-                    </div>
-                    <div class="alert-fact">
-                        <div class="alert-stat">51%</div>
-                        <p>Over half of all adults living with physical health limitations report feeling severely isolated. Without local support, the mental toll compounds, aggressively disrupting daily survival.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Crisis Intervention Interstitial -->
-        <section class="u01-section u01-reveal" id="intervention">
-            <span class="u01-eyebrow crisis-eyebrow">// NAMI Protocol: Crisis Recognition</span>
-            <h2 class="u01-section-title">Intervening Without Overriding</h2>
-            <p class="u01-section-desc">Because a Unit of One relies on strict independence, a mental health crisis can be exceptionally delicate. Standard interventions often feel like a threat to their autonomy. According to the National Alliance on Mental Illness (NAMI), recognizing the signs and acting with absolute respect for their dignity is critical.</p>
-            
-            <div class="u01-grid-2">
-                <div class="u01-card u01-reveal">
-                    <span class="u01-tag u01-tag-crisis">Identify</span>
-                    <h3>The Warning Signs</h3>
-                    <p>For a solo entity, the baseline is already independent. A shift into severe crisis often looks like absolute withdrawal—such as missing standard check-in texts with a landlord, neglecting the care of a feline companion, or an inability to manage daily tasks. NAMI notes other indicators include extreme mood swings, increased agitation, or an unexplained, sudden calmness that may indicate a finalized plan.</p>
-                </div>
-                <div class="u01-card u01-reveal">
-                    <span class="u01-tag u01-tag-action">Act</span>
-                    <h3>The Dignity Approach</h3>
-                    <p>Support is not control. When approaching a Unit of One in crisis, you must listen without judgment and validate their feelings rather than trying to force solutions. NAMI recommends speaking calmly, moving slowly, and providing them space so they do not feel trapped or cornered. Offer concrete, specific help without applying pressure, ensuring their agency remains intact.</p>
-                </div>
-            </div>
-            
-            <div class="crisis-action-block u01-reveal">
-                <a href="tel:988" class="u01-btn solid-crisis">Launch 988 : Crisis Lifeline</a>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="u01-footer">
-        <div class="footer-content">
-            <img src="assets/images/U01-logo-no-motto.png" alt="Unit of One Logo" class="u01-footer-logo">
-            <p class="u01-footer-text">Demanded Dignity - Non-Negotiable | Unit of One Operations &copy; 2026</p>
+    <div class="u01-loader-wrapper">
+        <div class="u01-status-text">Bypassing Systemic Grid...</div>
+        <div class="u01-progress-bar">
+            <div class="u01-progress-fill"></div>
         </div>
-    </footer>
-<!-- Footer code is above here -->
-    <script src="js/main.js"></script>
-</body>
-</html>
+    </div>
+
+    <a href="splash.html" class="u01-skip">OVERRIDE / SKIP SEQUENCE</a>
+
+    <script>
+        const video = document.getElementById('introVideo');
+        
+        // Listen for the exact moment the video finishes playing
+        video.addEventListener('ended', function() {
+            // Instantly route to the main architecture
+            window.location.href = 'splash.html';
+        });
+
+        // Failsafe: If the video fails to load or browser blocks autoplay, 
+        // force the redirect after 5.5 seconds to prevent users from getting stuck.
+        setTimeout(() => {
+            window.location.href = 'splash.html';
+        }, 5500);
+    </script>
+
 </body>
 </html>

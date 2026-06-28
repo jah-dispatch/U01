@@ -607,6 +607,134 @@ body {
         display: flex; /* Activates the hint text and arrow */
     }
 }
+/* --- U01 Gear Carousel System --- */
+.u01-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.u01-carousel-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 1rem 0 2rem 0; /* padding for drop shadows and scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--strike-gold) var(--armor-dark);
+    width: 100%;
+}
+
+/* Custom Scrollbar for Webkit (Chrome/Safari) */
+.u01-carousel-track::-webkit-scrollbar {
+    height: 6px;
+}
+.u01-carousel-track::-webkit-scrollbar-track {
+    background: var(--armor-dark);
+}
+.u01-carousel-track::-webkit-scrollbar-thumb {
+    background-color: var(--strike-gold);
+    border-radius: 10px;
+}
+
+.u01-carousel-item {
+    flex: 0 0 calc(33.333% - 16px); /* 3 items per view on desktop */
+    min-width: 300px;
+    scroll-snap-align: start;
+    background-color: var(--armor-dark);
+    border: 1px solid var(--bronze-shadow);
+    border-radius: 4px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.u01-carousel-item:hover {
+    border-color: var(--strike-gold);
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(234, 192, 102, 0.1);
+}
+
+/* CSS Generated Arrows */
+.u01-carousel-btn {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    background-color: var(--bg-void);
+    border: 1px solid var(--strike-gold);
+    color: var(--strike-gold);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.u01-carousel-btn:hover {
+    background-color: var(--strike-gold);
+    color: var(--bg-void);
+    box-shadow: 0 0 15px rgba(234, 192, 102, 0.4);
+}
+
+.u01-carousel-btn.left { left: -20px; }
+.u01-carousel-btn.right { right: -20px; }
+
+/* Responsive Carousel */
+@media (max-width: 900px) {
+    .u01-carousel-item { flex: 0 0 calc(50% - 12px); }
+}
+@media (max-width: 600px) {
+    .u01-carousel-item { flex: 0 0 100%; }
+    .u01-carousel-btn { display: none; /* Hide arrows on small mobile, rely on swipe */ }
+}
+
+/* --- Ecwid Aesthetic Overrides --- */
+.ec-size .ec-store .ecsp-SingleProduct-v2 {
+    background: transparent !important;
+}
+.ec-size .ec-store .ecsp-SingleProduct-v2 .ecsp-title {
+    color: var(--text-clarity) !important;
+    font-family: var(--font-sans) !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    font-size: 1.3rem !important;
+    letter-spacing: -0.02em !important;
+}
+.ec-size .ec-store .ecsp-SingleProduct-v2 .ecsp-price {
+    color: var(--crown-gold) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 1.2rem !important;
+    margin-top: 10px !important;
+}
+/* Forcing the Ecwid Button to mimic the u01-btn */
+.ec-size .ec-store .ecsp-SingleProduct-v2 .form-control__button {
+    background: var(--bg-void) !important;
+    color: var(--strike-gold) !important;
+    border: 2px solid var(--strike-gold) !important;
+    border-radius: 0 !important;
+    font-family: var(--font-mono) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    font-weight: bold !important;
+    padding: 16px 24px !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important; /* Forces button to span the card */
+    margin-top: 1rem !important;
+}
+.ec-size .ec-store .ecsp-SingleProduct-v2 .form-control__button:hover {
+    background: var(--strike-gold) !important;
+    color: var(--bg-void) !important;
+    box-shadow: 0 0 20px rgba(234, 192, 102, 0.4) !important;
+}
 /* --- External Comms: YouTube Integration --- */
 :root {
     --yt-red: #FF0000;
@@ -939,5 +1067,33 @@ body {
     }
     .solid-crisis {
         width: 100%;
+    }
+}
+/* Responsive Carousel & Mobile Arrow Patch */
+@media (max-width: 900px) {
+    .u01-carousel-item { flex: 0 0 calc(50% - 12px); }
+}
+
+@media (max-width: 600px) {
+    .u01-carousel-item { 
+        flex: 0 0 100%; 
+    }
+    
+    /* Forces arrows to remain operational on mobile viewports */
+    .u01-carousel-btn { 
+        display: flex !important; 
+        width: 40px;   /* Slightly tighter footprint for mobile glass */
+        height: 40px;
+        background-color: rgba(20, 17, 12, 0.95); /* Heavy --armor-dark fill to pop over content */
+        backdrop-filter: blur(4px);
+        top: 40%;      /* Clear vertical centering away from the lower buy button */
+    }
+    
+    /* Pulls the tactile triggers inside the screen margins so they don't clip */
+    .u01-carousel-btn.left { 
+        left: 10px; 
+    }
+    .u01-carousel-btn.right { 
+        right: 10px; 
     }
 }
