@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OURspace | Command Center</title>
+    <!-- Link your build styles and social styles -->
+    <link rel="stylesheet" href="css/u01-build1.css">
+    <link rel="stylesheet" href="css/u01-social.css">
+</head>
+<body class="dark-mode">
+
+    <!-- Top Navigation: OURspace Branding -->
+    <header class="u01-header">
+        <div class="logo-container">
+            <img src="assets/images/U01-logo-no-motto.png" alt="U01 Logo">
+            <h1>OURspace Dashboard</h1>
+            <h4>A Social Network for the Units of One</h4>
+        </div>
+        <nav class="nav-links">
+            <a href="login.html" class="u01-btn" style="padding: 10px 20px; font-size: 0.9rem;">Logout</a>
+        </nav>
+    </header>
+
+    <div class="u01-network-container">
+        
+        <!-- Pillar 1: The Identity Matrix (Left Column) -->
+        <aside class="profile-sidebar">
+            <img src="default-avatar.jpg" alt="User Avatar" id="userAvatar">
+            <h2 id="userDisplayName">Independent Unit</h2>
+            <p id="userBio">Demanded dignity - Non Negotiable.</p>
+            
+            <!-- Edit Controls -->
+            <div class="profile-actions">
+                <button id="editIdentityBtn" class="u01-btn" style="padding: 8px 16px; font-size: 0.75rem; width: 100%; margin-bottom: 15px;">Edit Identity</button>
+            </div>
+
+            <!-- The Hidden Editor Form -->
+            <div id="editProfileMatrix" style="display: none; text-align: left; margin-bottom: 20px;">
+                <label>Update Bio</label>
+                <textarea id="editBioInput" class="u01-input" rows="3"></textarea>
+                
+                <label>Soundscape (Apple/Spotify Link)</label>
+                <input type="text" id="editMediaInput" class="u01-input" placeholder="Paste track or playlist URL...">
+                
+                <button id="saveIdentityBtn" class="u01-btn solid-gold" style="width: 100%; padding: 8px; font-size: 0.8rem; margin-top: 10px;">Lock In Changes</button>
+            </div>
+
+            <!-- The Nostalgia Embed Zone -->
+            <div id="mediaEmbedContainer" style="margin-top: 20px;">
+                <!-- Apple Music / Spotify iframe will auto-inject here -->
+            </div>
+        </aside>
+
+        <!-- Pillar 2: The Chronological Ledger (Main Feed) -->
+        <main class="status-feed-area">
+            <div class="post-status-box">
+                <textarea id="newStatusInput" placeholder="Broadcast your status, drop a giphy link or upload an image *max file size 4MB* or speak your peace and drop a graphic too! This is YOURspace, after all..."></textarea>
+                <button id="postStatusBtn" class="u01-btn solid-gold">Send Update</button>
+            </div>
+
+<!-- Feed Identifier / Explainer Text -->
+            <div style="margin: 10px 0 20px 0; border-bottom: 1px solid var(--bronze-shadow); padding-bottom: 10px;">
+                <h2 style="color: var(--strike-gold); font-family: var(--font-mono); text-transform: uppercase; font-size: 0.95rem; letter-spacing: 0.1em; margin-bottom: 5px;">The Global Ledger</h2>
+                <p style="color: var(--text-muted); font-size: 1.25rem; margin: 0; line-height: 1.4;">Network-wide dispatches. All communications from the Unit of One network are chronologically logged below in real-time.</p>
+            </div>
+
+            <!-- Where the chronological statuses will load -->
+            <div id="globalFeed">
+                <!-- Status items inject here via JavaScript -->
+            </div>
+        </main>
+
+    </div>
+
+<footer class="u01-footer" style="width: 100%; margin-top: 40px;">
+        <div class="footer-content">
+            <img src="assets/images/U01-logo-no-motto.png" alt="Unit of One Logo" class="u01-footer-logo">
+            <p class="u01-footer-text">Demanded Dignity - Non-Negotiable | Unit of One Operations &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- Frontend Logic Link -->
+    <script type="module" src="./js/u01-social.js"></script>
+</body>
+</html>

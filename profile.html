@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U01 Network | Profile Viewer</title>
+    <link rel="stylesheet" href="css/u01-build1.css">
+    <link rel="stylesheet" href="css/u01-social.css">
+</head>
+<body class="dark-mode">
+
+    <!-- Top Navigation -->
+    <header class="u01-header">
+        <div class="logo-container">
+            <h1 style="color: var(--strike-gold); font-family: var(--font-mono); font-size: 1.5rem; margin: 0;">UNIT OF ONE</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="dashboard.html" class="u01-btn" style="padding: 8px 16px; font-size: 0.8rem;">Return to Command Center</a>
+        </nav>
+    </header>
+
+    <!-- Main Profile Layout -->
+    <main class="dashboard-container">
+        
+        <!-- Pillar 1: The Identity Matrix (Read-Only) -->
+        <aside class="profile-sidebar">
+            <img src="default-avatar.jpg" alt="User Avatar" id="profileAvatar">
+            <h2 id="profileDisplayName">Loading Unit...</h2>
+            <p id="profileBio">Establishing secure connection...</p>
+            
+            <!-- The Nostalgia Embed Zone -->
+            <div id="mediaEmbedContainer" style="margin-top: 20px;">
+                <!-- Auto-injects here if the user has a soundscape -->
+            </div>
+        </aside>
+
+        <!-- Pillar 2: The Personal Ledger -->
+        <section class="feed-section">
+            <div style="border-bottom: 1px solid var(--bronze-shadow); padding-bottom: 10px; margin-bottom: 20px;">
+                <h3 style="color: var(--strike-gold); font-family: var(--font-mono); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.1em;">Targeted Comm Feed</h3>
+            </div>
+            
+            <div id="userSpecificFeed" class="feed-container">
+                <!-- User's specific statuses will render here -->
+            </div>
+        </section>
+
+    </main>
+
+<footer class="u01-footer" style="width: 100%; margin-top: 40px;">
+        <div class="footer-content">
+            <img src="assets/images/U01-logo-no-motto.png" alt="Unit of One Logo" class="u01-footer-logo">
+            <p class="u01-footer-text">Demanded Dignity - Non-Negotiable | Unit of One Operations &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- The Logic Brain for this specific page -->
+    <script type="module" src="js/u01-profile.js"></script>
+</body>
+</html>
