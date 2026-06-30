@@ -403,3 +403,40 @@ body {
 .reaction-emoji:hover {
     transform: scale(1.4);
 }
+/* =========================================
+   MOBILE OPTIMIZATION (THE PERIMETER SNAP)
+   ========================================= */
+@media (max-width: 768px) {
+    .u01-header {
+        padding: 15px 10px;
+        flex-direction: column;
+        gap: 12px;
+        position: relative; /* Un-sticks the header so it doesn't cover the screen */
+    }
+    .logo-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 5px;
+    }
+    .logo-container img {
+        max-height: 50px; /* Shrinks the U01 Tiger */
+    }
+    .logo-container h1 {
+        font-size: 1.6rem; /* Shrinks the main title */
+        line-height: 1.1;
+        margin: 0;
+    }
+    .logo-container h4 {
+        font-size: 0.85rem;
+    }
+    .u01-network-container {
+        flex-direction: column; /* Stacks the sidebar on top of the feed */
+        gap: 20px;
+    }
+    .profile-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--bronze-shadow);
+        padding-bottom: 20px;
+    }
+}

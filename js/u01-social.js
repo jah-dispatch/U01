@@ -442,6 +442,7 @@ if (feedContainer && !feedContainer.dataset.eventsAttached) {
             }
         }
         
+        // BUG FIXES INJECTED HERE
         if (target.dataset.action === "post-comment") {
             const statusId = target.dataset.status;
             const authorId = target.dataset.author;
@@ -449,6 +450,13 @@ if (feedContainer && !feedContainer.dataset.eventsAttached) {
             const text = inputField.value.trim();
             
             if (!text) return;
+
+            // BUG FIX 1: Prevent commenting on legacy test posts that have no Author ID
+            if (!authorId || authorId === "undefined") {
+                alert("Cannot intercept: This is a legacy dispatch missing a target ID.");
+                return;
+            }
+
             target.innerText = "...";
             target.disabled = true;
             
@@ -457,13 +465,15 @@ if (feedContainer && !feedContainer.dataset.eventsAttached) {
                 await addDoc(commentsRef, {
                     text: text,
                     timestamp: serverTimestamp(),
-                    author: currentUser.displayName,
+                    // BUG FIX 2: Fallback string prevents Firebase SDK from crashing if name is null
+                    author: currentUser.displayName || "Independent Unit", 
                     author_id: currentUser.uid,
                     author_avatar: currentUser.photoURL || "default-avatar.jpg"
                 });
                 inputField.value = "";
             } catch (error) {
-                alert("Signal interrupted. Could not post intercept.");
+                console.error("Intercept failed:", error);
+                alert("Signal interrupted: " + error.message);
             } finally {
                 target.innerText = "Reply";
                 target.disabled = false;
