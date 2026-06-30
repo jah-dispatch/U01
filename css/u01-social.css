@@ -337,3 +337,69 @@ body {
     flex-direction: column;
     gap: 15px;
 }
+/* =========================================
+   OURspace Profile Shimmer & Text FX
+   ========================================= */
+
+.shimmer-gold {
+    background: linear-gradient(to right, var(--strike-gold) 20%, #fffbd5 40%, #fffbd5 60%, var(--strike-gold) 80%);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shine 3s linear infinite;
+    /* Ensures the font stays branded */
+    font-family: var(--font-mono); 
+    text-transform: uppercase;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* Softens the bio text for better contrast against the dark background */
+#profileBio {
+    color: var(--text-clarity); 
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+/* =========================================
+   OURspace Reaction Engine
+   ========================================= */
+.reaction-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.reaction-menu {
+    display: none;
+    position: absolute;
+    bottom: 110%; /* Pops up directly above the button */
+    left: 0;
+    background: var(--armor-dark);
+    border: 1px solid var(--strike-gold);
+    border-radius: 20px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    z-index: 100;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.8);
+}
+
+/* The hover trigger */
+.reaction-wrapper:hover .reaction-menu {
+    display: flex;
+    gap: 12px;
+}
+
+.reaction-emoji {
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.reaction-emoji:hover {
+    transform: scale(1.4);
+}
