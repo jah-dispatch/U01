@@ -440,3 +440,52 @@ body {
         padding-bottom: 20px;
     }
 }
+/* =========================================
+   MOBILE OPTIMIZATION (THE PERIMETER SNAP)
+   ========================================= */
+@media (max-width: 768px) {
+    .u01-header {
+        height: auto !important;
+        padding: 15px !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        position: relative !important;
+    }
+    .logo-container {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+    .logo-container img {
+        max-height: 45px !important;
+        margin: 0 auto !important;
+    }
+    .logo-container h1 {
+        font-size: 1.4rem !important;
+        line-height: 1.2 !important;
+        white-space: normal !important;
+        margin: 0 !important;
+    }
+    .logo-container h4 {
+        font-size: 0.8rem !important;
+        margin: 0 !important;
+    }
+    .nav-links {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 10px !important;
+    }
+    .u01-network-container {
+        flex-direction: column !important; 
+        gap: 20px !important;
+    }
+    .profile-sidebar {
+        width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--bronze-shadow) !important;
+        padding-bottom: 20px !important;
+    }
+}

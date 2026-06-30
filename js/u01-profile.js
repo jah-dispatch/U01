@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, query, orderBy, onSnapshot, limit, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, query, orderBy, onSnapshot, limit, addDoc, serverTimestamp, updateDoc, deleteDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuiHmPgfj5GHE3BIWeRgbeJWdU4nidhMs",
@@ -14,6 +14,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const ADMIN_UID = "feW9u6LczHTdzkEb0LIB2Ufol2t2"; 
 
 const profileAvatar = document.getElementById("profileAvatar");
 const profileDisplayName = document.getElementById("profileDisplayName");
@@ -30,7 +31,7 @@ onAuthStateChanged(auth, (user) => {
     if (!user) {
         window.location.href = "login.html";
     } else {
-        currentUser = user; // Capture current user for the comment payload
+        currentUser = user; 
         if (!targetUserId) {
             window.location.href = "dashboard.html";
         } else {
@@ -53,7 +54,6 @@ async function loadProfileData(userId) {
             if (data.media_url) { renderMediaEmbed(data.media_url); }
         } else {
             profileDisplayName.innerText = "Unit Not Found";
-            profileBio.innerText = "This profile does not exist or has been redacted.";
         }
     } catch (error) {
         profileBio.innerText = "Signal interrupted. Could not load identity matrix.";
@@ -81,10 +81,36 @@ function loadUserFeed(userId) {
             snapshot.forEach((docSnap) => {
                 const data = docSnap.data();
                 const timeString = data.timestamp ? data.timestamp.toDate().toLocaleString() : "Just now";
-                const avatarSrc = profileAvatar.src; // Preserving the specific avatar override
+                const avatarSrc = profileAvatar.src; // Avatar Override Maintained!
                 const feedImgUrl = data.media_url || data.gif_url;
                 const mediaHTML = feedImgUrl ? `<div style="margin-top: 15px;"><img src="${feedImgUrl}" style="max-width: 100%; max-height: 400px; border-radius: 8px; border: 1px solid var(--strike-gold); object-fit: contain;"></div>` : '';
                 
+                // REACTION DATA PARSING
+                const reactions = data.reactions || { star: [], alert: [], tiger: [] };
+                const starCount = reactions.star ? reactions.star.length : 0;
+                const alertCount = reactions.alert ? reactions.alert.length : 0;
+                const tigerCount = reactions.tiger ? reactions.tiger.length : 0;
+
+                const reactionHTML = `
+                    <div class="reaction-wrapper">
+                        <button class="u01-btn" style="padding: 5px 12px; font-size: 0.75rem; background: transparent; border: 1px solid var(--strike-gold); color: var(--strike-gold);">Acknowledge</button>
+                        <div class="reaction-menu">
+                            <span class="reaction-emoji" data-action="react" data-type="star" data-author="${data.author_id}" data-status="${docSnap.id}">⭐</span>
+                            <span class="reaction-emoji" data-action="react" data-type="alert" data-author="${data.author_id}" data-status="${docSnap.id}">❗</span>
+                            <span class="reaction-emoji" data-action="react" data-type="tiger" data-author="${data.author_id}" data-status="${docSnap.id}">🐅</span>
+                        </div>
+                    </div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); display: inline-block; transform: translateY(2px); margin-right: 15px;">
+                        ${starCount > 0 ? `⭐ ${starCount} ` : ''}
+                        ${alertCount > 0 ? `❗ ${alertCount} ` : ''}
+                        ${tigerCount > 0 ? `🐅 ${tigerCount} ` : ''}
+                    </span>
+                `;
+
+                // REDACTION PROTOCOL
+                const showDeleteStatus = (currentUser.uid === data.author_id || currentUser.uid === ADMIN_UID);
+                const deleteBtnHTML = showDeleteStatus ? `<button class="u01-btn" data-action="delete-status" data-author="${data.author_id}" data-status="${docSnap.id}" style="padding: 5px 12px; font-size: 0.75rem; background: transparent; border: 1px solid darkred; color: darkred; margin-left: auto;">Scrub</button>` : '';
+
                 const statusHTML = `
                     <div class="status-item" style="display: flex; gap: 15px; align-items: flex-start; padding: 20px; border-bottom: 1px solid var(--bronze-shadow);">
                         <img src="${avatarSrc}" alt="${data.author}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--strike-gold); object-fit: cover; flex-shrink: 0; background-color: var(--armor-dark);">
@@ -100,15 +126,17 @@ function loadUserFeed(userId) {
                             <p style="color: var(--text-clarity); font-size: 1.05rem; margin: 0; line-height: 1.5; word-wrap: break-word;">${data.text}</p>
                             ${mediaHTML}
                             
-                            <div class="status-actions" style="margin-top: 15px; border-top: 1px solid rgba(200, 151, 54, 0.2); padding-top: 10px;">
+                            <div class="status-actions" style="margin-top: 15px; border-top: 1px solid rgba(200, 151, 54, 0.2); padding-top: 10px; display: flex; align-items: center;">
+                                ${reactionHTML}
                                 <button class="u01-btn" data-action="toggle-comments" data-author="${data.author_id}" data-status="${docSnap.id}" style="padding: 5px 12px; font-size: 0.75rem; background: transparent; border: 1px solid var(--strike-gold); color: var(--strike-gold);">
                                     View / Send Intercept
                                 </button>
+                                ${deleteBtnHTML}
                             </div>
                             
                             <div class="comments-section" id="comments-${docSnap.id}" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; border: 1px solid var(--bronze-shadow);">
                                 <div id="comment-list-${docSnap.id}" style="margin-bottom: 15px; max-height: 250px; overflow-y: auto;">
-                                    </div>
+                                </div>
                                 <div style="display: flex; gap: 10px;">
                                     <input type="text" id="comment-input-${docSnap.id}" class="u01-input" placeholder="Transmit reply..." style="flex: 1; padding: 8px; font-size: 0.85rem;">
                                     <button class="u01-btn solid-gold" data-action="post-comment" data-author="${data.author_id}" data-status="${docSnap.id}" style="padding: 8px 16px; font-size: 0.85rem;">Reply</button>
@@ -139,13 +167,52 @@ function loadUserFeed(userId) {
     }
 }
 
-// --- Comment Engine (Event Delegation) ---
+// --- Event Engine ---
 window.activeCommentListeners = window.activeCommentListeners || {};
 
-if (feedContainer && !feedContainer.dataset.commentsAttached) {
+if (feedContainer && !feedContainer.dataset.eventsAttached) {
     feedContainer.addEventListener("click", async (e) => {
         const target = e.target;
         
+        if (target.dataset.action === "react") {
+            const type = target.dataset.type;
+            const statusId = target.dataset.status;
+            const authorId = target.dataset.author;
+            const statusRef = doc(db, "users", authorId, "statuses", statusId);
+            try {
+                const snap = await getDoc(statusRef);
+                if (snap.exists()) {
+                    const data = snap.data();
+                    const reactions = data.reactions || { star: [], alert: [], tiger: [] };
+                    const currentArray = reactions[type] || [];
+                    if (currentArray.includes(currentUser.uid)) {
+                        await updateDoc(statusRef, { [`reactions.${type}`]: arrayRemove(currentUser.uid) });
+                    } else {
+                        await updateDoc(statusRef, { [`reactions.${type}`]: arrayUnion(currentUser.uid) });
+                    }
+                }
+            } catch (error) { console.error("Reaction failed"); }
+        }
+
+        if (target.dataset.action === "delete-status") {
+            if (!confirm("Commander: Permanently redact this dispatch?")) return;
+            const statusId = target.dataset.status;
+            const authorId = target.dataset.author;
+            try {
+                await deleteDoc(doc(db, "users", authorId, "statuses", statusId));
+            } catch (error) { alert("Redaction failed."); }
+        }
+
+        if (target.dataset.action === "delete-comment") {
+            if (!confirm("Permanently redact this intercept?")) return;
+            const statusId = target.dataset.status;
+            const statusAuthorId = target.dataset.statusAuthor;
+            const commentId = target.dataset.comment;
+            try {
+                await deleteDoc(doc(db, "users", statusAuthorId, "statuses", statusId, "comments", commentId));
+            } catch (error) { alert("Redaction failed."); }
+        }
+
         if (target.dataset.action === "toggle-comments") {
             const statusId = target.dataset.status;
             const authorId = target.dataset.author;
@@ -168,6 +235,13 @@ if (feedContainer && !feedContainer.dataset.commentsAttached) {
             const text = inputField.value.trim();
             
             if (!text) return;
+            
+            // Catch for missing author IDs on legacy posts
+            if (!authorId || authorId === "undefined") {
+                alert("Cannot intercept: This is a legacy dispatch missing a target ID.");
+                return;
+            }
+
             target.innerText = "...";
             target.disabled = true;
             
@@ -176,21 +250,21 @@ if (feedContainer && !feedContainer.dataset.commentsAttached) {
                 await addDoc(commentsRef, {
                     text: text,
                     timestamp: serverTimestamp(),
-                    author: currentUser.displayName,
+                    author: currentUser.displayName || "Independent Unit",
                     author_id: currentUser.uid,
                     author_avatar: currentUser.photoURL || "default-avatar.jpg"
                 });
                 inputField.value = "";
             } catch (error) {
                 console.error("Intercept failed:", error);
-                alert("Signal interrupted. Could not post intercept.");
+                alert("Signal interrupted: Check network permissions.");
             } finally {
                 target.innerText = "Reply";
                 target.disabled = false;
             }
         }
     });
-    feedContainer.dataset.commentsAttached = "true";
+    feedContainer.dataset.eventsAttached = "true";
 }
 
 function loadComments(statusAuthorId, statusId) {
@@ -213,6 +287,9 @@ function loadComments(statusAuthorId, statusId) {
             const avatarSrc = data.author_avatar || "default-avatar.jpg";
             const profileLink = data.author_id ? `profile.html?user=${data.author_id}` : "#";
             
+            const showDeleteComment = (currentUser.uid === data.author_id || currentUser.uid === statusAuthorId || currentUser.uid === ADMIN_UID);
+            const deleteCommentHTML = showDeleteComment ? `<span data-action="delete-comment" data-status="${statusId}" data-status-author="${statusAuthorId}" data-comment="${docSnap.id}" style="color: darkred; cursor: pointer; font-size: 0.75rem; margin-left: 10px; font-weight: bold;" title="Redact Intercept">[X]</span>` : '';
+
             const commentHTML = `
                 <div style="display: flex; gap: 10px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed rgba(200, 151, 54, 0.3);">
                     <a href="${profileLink}" style="flex-shrink: 0;">
@@ -223,6 +300,7 @@ function loadComments(statusAuthorId, statusId) {
                             ${data.author}
                         </a>
                         <span style="color: var(--text-muted); font-size: 0.7rem; margin-left: 8px;">${timeString}</span>
+                        ${deleteCommentHTML}
                         <p style="color: var(--text-clarity); font-size: 0.95rem; margin: 4px 0 0 0; line-height: 1.4;">${data.text}</p>
                     </div>
                 </div>
@@ -232,6 +310,7 @@ function loadComments(statusAuthorId, statusId) {
         listContainer.scrollTop = listContainer.scrollHeight; 
     });
 }
+
 function renderMediaEmbed(url) {
     let embedUrl = "";
     let playerHeight = "450"; 
